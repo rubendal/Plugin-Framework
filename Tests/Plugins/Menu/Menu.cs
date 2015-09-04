@@ -24,7 +24,7 @@ namespace Menu
 
         public override string GetKey()
         {
-            return "0000";
+            return "something";
         }
 
         public override string Name()

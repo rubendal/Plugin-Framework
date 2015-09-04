@@ -22,7 +22,7 @@ namespace Forms
 
         private bool evaluateKey(string key)
         {
-            return key == "0000";
+            return key == "something";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace Forms
             parameters.Add("value", 30);
             manager.SetConfiguration(new PluginConfiguration(parameters));
             //manager.SetKeyAllow(evaluateKey);
-            manager.SetKeyAllow((string key) => { return key == "0000"; });
+            manager.SetKeyAllow((string key) => { return key == "something"; });
             string runnablePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\Runnable\bin\Debug\Runnable.dll"));
             string menuPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\Menu\bin\Debug\Menu.dll"));
             string formPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\Form\bin\Debug\Form.dll"));
