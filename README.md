@@ -20,6 +20,7 @@ parameters.Add("value", 30);
 
 ### Plugin Types
 Easy plugin coding using plugin types or implement **IPlugin** for a custom one
+
 Included types: 
 * Runnable
 * Menu
