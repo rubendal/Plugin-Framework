@@ -1,3 +1,1 @@
 test
-Appending some text to the file
-Appending some text to the file
