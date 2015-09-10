@@ -7,6 +7,10 @@ C# NET library to implement a plugin framework
 ```
 PluginManager manager = new PluginManager();
 manager.LoadPlugin(pluginPath);
+
+//Using a directory for Plugins
+PluginManager manager = new PluginManager(pluginDirectoryPath);
+manager.LoadPlugins();
 ```
 * Can set a verification function or lambda expression to allow plugins like an API key
 ```
