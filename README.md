@@ -20,6 +20,7 @@ parameters.Add("value", 30);
 
 ### Plugin Types
 Easy plugin coding using plugin types or implement **IPlugin** for a custom one
+
 Included types: 
 * Runnable
 * Menu
@@ -29,3 +30,6 @@ Included types:
 
 ### Test plugins and apps
 Plugins and apps using the plugins are located on the Tests folder
+
+### To Do
+* Documentation
