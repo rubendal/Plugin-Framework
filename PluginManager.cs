@@ -53,8 +53,8 @@ namespace Plugin_Framework
                     {
                         pluginTypes = Assembly.Load(File.ReadAllBytes(path)).GetTypes().Where(type => type.IsSubclassOf(typeof(IPlugin)) ||
                         type.IsSubclassOf(typeof(RunnablePlugin)) ||
-                        type.IsSubclassOf(typeof(MenuPlugin)) || type.IsSubclassOf(typeof(FormsPlugin)) ||
-                        type.IsSubclassOf(typeof(WPFPlugin)) || type.IsSubclassOf(typeof(FilePlugin))).ToArray();
+                        type.IsSubclassOf(typeof(MenuPlugin)) || Plugin.CheckTypeForGenericPlugin(type, typeof(FormsPlugin<>)) ||
+                        Plugin.CheckTypeForGenericPlugin(type, typeof(WPFPlugin<>)) || type.IsSubclassOf(typeof(FilePlugin))).ToArray();
                     }
                     catch
                     {

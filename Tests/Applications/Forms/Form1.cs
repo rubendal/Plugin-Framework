@@ -48,17 +48,19 @@ namespace Forms
                 {
                     r.Run();
                 }
-                if (r.plugin is MenuPlugin)
+                //if (r.plugin is MenuPlugin)
+                if(Plugin.CheckTypeForGenericPlugin(r.PluginType, typeof(MenuPlugin)))
                 {
                     MenuPlugin mp = (MenuPlugin)r.plugin;
                     mp.menuStrip = this.formMenuStrip;
                     mp.Run();
                 }
-                if (r.plugin is FormsPlugin)
+                if (Plugin.CheckTypeForGenericPlugin(r.PluginType,typeof(FormsPlugin<>)))
                 {
-                    FormsPlugin fp = (FormsPlugin)r.plugin;
-                    if (fp.controlType == typeof(Form))
+                    Type t = Plugin.GetGenericClass(r.PluginType);
+                    if (t == typeof(Form))
                     {
+                        FormsPlugin<Form> fp = (FormsPlugin<Form>)r.plugin;
                         fp.control = this;
                         fp.Run();
                     }

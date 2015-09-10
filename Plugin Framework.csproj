@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="IPlugin.cs" />
     <Compile Include="LoadedPlugin.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="PluginEventArgs.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="PluginConfiguration.cs" />

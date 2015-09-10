@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Plugin_Framework.Types
 {
-    public abstract class FormsPlugin : IPlugin
+    public abstract class FormsPlugin<T> : IPlugin where T : Control
     {
         public abstract event EventHandler<PluginEventArgs> Started;
         public abstract event EventHandler<PluginEventArgs> Finished;
@@ -19,8 +19,8 @@ namespace Plugin_Framework.Types
         public abstract void Run();
         public abstract void SetConfiguration(PluginConfiguration pluginConfig);
 
-        public abstract Type controlType { get; set; }
-        public abstract Control control { get; set; }
+        //public abstract Type controlType { get; set; }
+        public abstract T control { get; set; }
 
         PType IPlugin.GetPType()
         {

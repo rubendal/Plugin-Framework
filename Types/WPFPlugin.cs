@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Plugin_Framework.Types
 {
-    public abstract class WPFPlugin : IPlugin
+    public abstract class WPFPlugin<T> : IPlugin where T : UIElement
     {
         public abstract event EventHandler<PluginEventArgs> Started;
         public abstract event EventHandler<PluginEventArgs> Finished;
@@ -19,10 +19,10 @@ namespace Plugin_Framework.Types
         public abstract void Run();
         public abstract void SetConfiguration(PluginConfiguration pluginConfig);
 
-        public abstract Type controlType { get; set; }
-        public abstract Control control { get; set; }
+        //public abstract Type controlType { get; set; }
+        public abstract T control { get; set; }
 
-        public abstract Window window { get; set; }
+        //public abstract Window window { get; set; }
 
         PType IPlugin.GetPType()
         {

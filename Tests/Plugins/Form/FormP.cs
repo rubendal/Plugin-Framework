@@ -9,11 +9,11 @@ using Plugin_Framework;
 
 namespace FormP
 {
-    public class FormP : FormsPlugin
+    public class FormP : FormsPlugin<Form>
     {
-        public override Control control { get; set; }
+        public override Form control { get; set; }
 
-        public override Type controlType { get; set; } = typeof(Form);
+        //public override Type controlType { get; set; } = typeof(Form);
 
         public override event EventHandler<PluginEventArgs> Finished;
         public override event EventHandler<PluginEventArgs> Started;
@@ -52,8 +52,8 @@ namespace FormP
             button.Text = "Press";
             button.Click += Button_Click;
 
-            ((Form)control).Controls.Add(textbox);
-            ((Form)control).Controls.Add(button);
+            control.Controls.Add(textbox);
+            control.Controls.Add(button);
 
             Finished(this, new PluginEventArgs(this, "Finished form"));
         }

@@ -10,13 +10,13 @@ using Plugin_Framework;
 
 namespace WPF
 {
-    public class WPF : WPFPlugin
+    public class WPF : WPFPlugin<Window>
     {
-        public override Control control { get; set; }
+        public override Window control { get; set; }
 
-        public override Type controlType { get; set; } = typeof(Window);
+        //public override Type controlType { get; set; } = typeof(Window);
 
-        public override Window window { get; set; }
+        //public override Window window { get; set; }
 
         public override event EventHandler<PluginEventArgs> Finished;
         public override event EventHandler<PluginEventArgs> Started;
@@ -57,7 +57,7 @@ namespace WPF
             button.Content = "Press";
             button.Click += Button_Click;
 
-            Grid grid = window.Content as Grid;
+            Grid grid = control.Content as Grid;
             grid.Children.Add(textbox);
             grid.Children.Add(button);
 

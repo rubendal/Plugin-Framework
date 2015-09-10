@@ -11,11 +11,13 @@ namespace Plugin_Framework
     {
         public IPlugin plugin { get; private set; }
         public Assembly assembly { get; private set; }
+        public Type PluginType { get; private set; }
         private string path;
 
         public LoadedPlugin(IPlugin plugin, Type type, string path)
         {
             this.plugin = plugin;
+            this.PluginType = type;
             this.assembly = type.Assembly;
             this.path = path;
         }
