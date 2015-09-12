@@ -7,6 +7,9 @@ using System.Reflection;
 
 namespace Plugin_Framework
 {
+    /// <summary>
+    /// Contains loaded plugins data
+    /// </summary>
     public class LoadedPlugin : IEquatable<LoadedPlugin>
     {
         public IPlugin plugin { get; private set; }
@@ -22,6 +25,9 @@ namespace Plugin_Framework
             this.path = path;
         }
 
+        /// <summary>
+        /// Get loaded plugin name
+        /// </summary>
         public string Name
         {
             get
@@ -30,16 +36,28 @@ namespace Plugin_Framework
             }
         }
 
+        /// <summary>
+        /// Checks if a plugin is equal depending on the name
+        /// </summary>
+        /// <param name="other">Plugin to compare</param>
+        /// <returns>true if both plugins names are equal, false otherwise</returns>
         public bool Equals(LoadedPlugin other)
         {
             return this.Name == other.Name;
         }
 
+        /// <summary>
+        /// Returns plugin <see cref="PType"/>
+        /// </summary>
+        /// <returns>Plugin class <see cref="PType"/></returns>
         public PType GetPType()
         {
             return plugin.GetPType();
         }
 
+        /// <summary>
+        /// Execute the plugin <see cref="IPlugin.Run"/> method
+        /// </summary>
         public void Run()
         {
             plugin.Run();

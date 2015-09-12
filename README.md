@@ -51,5 +51,5 @@ Included types:
 ### Test plugins and apps
 Plugins and apps using the plugins are located on the Tests folder
 
-### To Do
-* Documentation
+## NuGet
+NuGet is available here https://www.nuget.org/packages/rubendal.PluginFramework

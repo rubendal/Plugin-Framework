@@ -16,6 +16,10 @@ namespace Plugin_Framework
         private Func<string, bool> function;
         private PluginConfiguration config;
 
+        /// <summary>
+        /// Create a <see cref="PluginManager"/> using a directory path to load plugins using <see cref="LoadPlugins"/>
+        /// </summary>
+        /// <param name="path">Plugin directory path</param>
         public PluginManager(string path)
         {
             this._path = path;
@@ -24,6 +28,9 @@ namespace Plugin_Framework
             function = null;
         }
 
+        /// <summary>
+        /// Create a <see cref="PluginManager"/>
+        /// </summary>
         public PluginManager()
         {
             this._path = null;
@@ -32,16 +39,29 @@ namespace Plugin_Framework
             function = null;
         }
 
+        /// <summary>
+        /// Set the function to evaluate plugins keys to allow plugins to be loaded (like an API key verification)
+        /// </summary>
+        /// <param name="function"><see cref="Func{String, TResult}"/> of in <see cref="string"/>, out <see cref="bool"/> to use for key evaluations</param>
         public void SetKeyAllow(Func<string,bool> function)
         {
             this.function = function;
         }
 
+        /// <summary>
+        /// Set default <see cref="PluginConfiguration"/> to use in plugins
+        /// </summary>
+        /// <param name="config"><see cref="PluginConfiguration"/> to use</param>
         public void SetConfiguration(PluginConfiguration config)
         {
             this.config = config;
         }
 
+        /// <summary>
+        /// Load a plugin from the specified path
+        /// </summary>
+        /// <param name="path">Plugin dll path</param>
+        /// <returns>true if plugin was loaded successfully, false otherwise</returns>
         public bool LoadPlugin(string path)
         {
             if (File.Exists(path))
@@ -53,8 +73,8 @@ namespace Plugin_Framework
                     {
                         pluginTypes = Assembly.Load(File.ReadAllBytes(path)).GetTypes().Where(type => type.IsSubclassOf(typeof(IPlugin)) ||
                         type.IsSubclassOf(typeof(RunnablePlugin)) ||
-                        type.IsSubclassOf(typeof(MenuPlugin)) || Plugin.CheckTypeForGenericPlugin(type, typeof(FormsPlugin<>)) ||
-                        Plugin.CheckTypeForGenericPlugin(type, typeof(WPFPlugin<>)) || type.IsSubclassOf(typeof(FilePlugin))).ToArray();
+                        type.IsSubclassOf(typeof(MenuPlugin)) || GenericPlugin.CheckTypeForGenericPlugin(type, typeof(FormsPlugin<>)) ||
+                        GenericPlugin.CheckTypeForGenericPlugin(type, typeof(WPFPlugin<>)) || type.IsSubclassOf(typeof(FilePlugin))).ToArray();
                     }
                     catch
                     {
@@ -79,6 +99,9 @@ namespace Plugin_Framework
             return false;
         }
 
+        /// <summary>
+        /// Load plugins from initialized path from constructor
+        /// </summary>
         public void LoadPlugins()
         {
             if (_path != null)
@@ -87,6 +110,10 @@ namespace Plugin_Framework
             }
         }
 
+        /// <summary>
+        /// Load plugins from the specified path
+        /// </summary>
+        /// <param name="path">Directory path to use</param>
         public void LoadPluginsFromDirectory(string path)
         {
             string[] dllFileNames = Directory.GetFiles(path, "*.dll");

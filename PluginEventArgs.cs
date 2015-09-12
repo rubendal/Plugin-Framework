@@ -11,6 +11,11 @@ namespace Plugin_Framework
         public IPlugin source { get; set; }
         public object data { get; set; }
 
+        /// <summary>
+        /// <see cref="EventArgs"/> used by Plugins events
+        /// </summary>
+        /// <param name="source">Plugin source</param>
+        /// <param name="data">data to pass</param>
         public PluginEventArgs(IPlugin source, object data)
         {
             this.source = source;

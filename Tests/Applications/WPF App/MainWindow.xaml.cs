@@ -44,9 +44,9 @@ namespace WPF_App
                     r.Run();
                 }
                 
-                if (Plugin.CheckTypeForGenericPlugin(r.PluginType, typeof(WPFPlugin<>)))
+                if (GenericPlugin.CheckTypeForGenericPlugin(r.PluginType, typeof(WPFPlugin<>)))
                 {
-                    Type t = Plugin.GetGenericClass(r.PluginType);
+                    Type t = GenericPlugin.GetGenericClass(r.PluginType);
                     if (t == typeof(Window))
                     {
                         WPFPlugin<Window> fp = (WPFPlugin<Window>)r.plugin;
