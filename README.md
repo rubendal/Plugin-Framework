@@ -1,5 +1,4 @@
 # Plugin-Framework
-C# NET library to implement a plugin framework
 
 ## Functionality
 

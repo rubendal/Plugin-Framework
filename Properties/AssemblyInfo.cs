@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Plugin Framework")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Framework to develop and implement plugins in an application")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Plugin Framework")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("rubendal")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
