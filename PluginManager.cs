@@ -12,9 +12,11 @@ namespace Plugin_Framework
     public sealed class PluginManager
     {
         private string _path;
-        public List<LoadedPlugin> plugins { get; set; }
+        public List<Plugin> plugins { get; set; }
         private Func<string, bool> function;
         private PluginConfiguration config;
+        private EventHandler<PluginEventArgs> startEvent;
+        private EventHandler<PluginEventArgs> finishEvent;
 
         /// <summary>
         /// Create a <see cref="PluginManager"/> using a directory path to load plugins using <see cref="LoadPlugins"/>
@@ -24,8 +26,10 @@ namespace Plugin_Framework
         {
             this._path = path;
             config = new PluginConfiguration();
-            plugins = new List<LoadedPlugin>();
+            plugins = new List<Plugin>();
             function = null;
+            startEvent = new EventHandler<PluginEventArgs>((o, e) => { });
+            finishEvent = new EventHandler<PluginEventArgs>((o, e) => { });
         }
 
         /// <summary>
@@ -35,8 +39,10 @@ namespace Plugin_Framework
         {
             this._path = null;
             config = new PluginConfiguration();
-            plugins = new List<LoadedPlugin>();
+            plugins = new List<Plugin>();
             function = null;
+            startEvent = new EventHandler<PluginEventArgs>((o, e) => { });
+            finishEvent = new EventHandler<PluginEventArgs>((o, e) => { });
         }
 
         /// <summary>
@@ -46,6 +52,25 @@ namespace Plugin_Framework
         public void SetKeyAllow(Func<string,bool> function)
         {
             this.function = function;
+        }
+
+        /// <summary>
+        /// Set defined <see cref="EventHandler{TEventArgs}" of <see cref="PluginEventArgs"/> that will be set on loaded plugins/>
+        /// </summary>
+        /// <param name="started"><see cref="IPlugin.Started"/> <see cref="EventHandler{TEventArgs}"/> of <see cref="PluginEventArgs"/></param>
+        /// <param name="finished"><see cref="IPlugin.Finished"/> <see cref="EventHandler{TEventArgs}"/> of <see cref="PluginEventArgs"/></param>
+        public void SetEventHandlers(EventHandler<PluginEventArgs> started, EventHandler<PluginEventArgs> finished)
+        {
+            if(started == null)
+            {
+                started = new EventHandler<PluginEventArgs>((o, e) => { });
+            }
+            if (finished == null)
+            {
+                finished = new EventHandler<PluginEventArgs>((o, e) => { });
+            }
+            startEvent = started;
+            finishEvent = finished;
         }
 
         /// <summary>
@@ -83,13 +108,15 @@ namespace Plugin_Framework
                     foreach (Type t in pluginTypes)
                     {
                         IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
-                        if (!plugins.Contains(new LoadedPlugin(plugin, t, path)))
+                        if (!plugins.Contains(new Plugin(plugin, t, path)))
                         {
                             bool? keypass = function?.Invoke(plugin.GetKey());
                             if (keypass.GetValueOrDefault(true))
                             {
                                 plugin.SetConfiguration(config);
-                                plugins.Add(new LoadedPlugin(plugin, t, path));
+                                plugin.Started += startEvent;
+                                plugin.Finished += finishEvent;
+                                plugins.Add(new Plugin(plugin, t, path));
                             }
                         }
                     }
@@ -124,6 +151,61 @@ namespace Plugin_Framework
                     LoadPlugin(file);
                 }
             }
+        }
+
+        /// <summary>
+        /// Run loaded plugins that return the name given
+        /// </summary>
+        /// <param name="name">Plugin name</param>
+        /// <returns>true if at least a plugin is executed, false otherwise</returns>
+        public bool RunPluginByName(string name)
+        {
+            bool exists = false;
+            foreach(Plugin plugin in plugins)
+            {
+                if (plugin.Name == name)
+                {
+                    plugin.Run();
+                    exists = true;
+                }
+            }
+            return exists;
+        }
+
+        /// <summary>
+        /// Run loaded plugin based on its filename without extension
+        /// </summary>
+        /// <param name="fileName">Filename of the loaded plugin to run, ".dll" extension will be ignored</param>
+        /// <returns>true if the plugin runs, false otherwise</returns>
+        public bool RunPluginByFileName(string fileName)
+        {
+            foreach (Plugin plugin in plugins)
+            {
+                if (plugin.fileName == fileName.Replace(".dll",""))
+                {
+                    plugin.Run();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Filter loaded plugins and get a list of plugins of the specified type
+        /// </summary>
+        /// <param name="pluginType">Plugin type to filter</param>
+        /// <returns>List of <see cref="Plugin"/> of the specified type, returns empty List if there is no plugin</returns>
+        public List<Plugin> GetPluginsByType(Type pluginType)
+        {
+            List<Plugin> f = new List<Plugin>();
+            foreach(Plugin p in plugins)
+            {
+                if (GenericPlugin.CheckTypeForGenericPlugin(p.PluginType, pluginType))
+                {
+                    f.Add(p);
+                }
+            }
+            return f;
         }
     }
 }

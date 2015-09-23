@@ -31,6 +31,7 @@ namespace Runnable
 
         public override void Run()
         {
+
             Started(this, new PluginEventArgs(this, "Starting runnable"));
 
             int p = 20;

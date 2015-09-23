@@ -34,7 +34,7 @@ namespace WPF_App
             string wpfPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\WPF\bin\Debug\WPF.dll"));
             manager.LoadPlugin(runnablePath);
             manager.LoadPlugin(wpfPath);
-            foreach (LoadedPlugin r in manager.plugins)
+            foreach (Plugin r in manager.plugins)
             {
                 Console.WriteLine(r.Name);
                 r.plugin.Started += Plugin_Started;

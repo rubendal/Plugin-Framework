@@ -39,7 +39,7 @@ namespace Forms
             manager.LoadPlugin(runnablePath);
             manager.LoadPlugin(menuPath);
             manager.LoadPlugin(formPath);
-            foreach (LoadedPlugin r in manager.plugins)
+            foreach (Plugin r in manager.plugins)
             {
                 Console.WriteLine(r.Name);
                 r.plugin.Started += Plugin_Started;

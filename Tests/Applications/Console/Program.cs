@@ -19,13 +19,13 @@ namespace ConsoleTest
             manager.SetConfiguration(new PluginConfiguration(parameters));
             string runnablePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\Runnable\bin\Debug\Runnable.dll"));
             string filePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", @"Plugins\File\bin\Debug\File.dll"));
+            manager.SetEventHandlers(null, new EventHandler<PluginEventArgs>((object s, PluginEventArgs e) => { Console.WriteLine(e.source.Name()); }));
             manager.LoadPlugin(runnablePath);
             manager.LoadPlugin(filePath);
-            foreach(LoadedPlugin r in manager.plugins)
+            manager.RunPluginByName("Runnable");
+            foreach (Plugin r in manager.plugins)
             {
                 Console.WriteLine(r.Name);
-                r.plugin.Started += Plugin_Started;
-                r.plugin.Finished += Plugin_Finished;
                 if (r.plugin is RunnablePlugin)
                 {
                     r.Run();
